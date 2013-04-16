@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+STRING
+@product = Product.new(:name => "All")
+@product.save!

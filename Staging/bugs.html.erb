@@ -1,0 +1,38 @@
+<h1>Critical Bugs</h1>
+
+<% if can? :create, Bug %>
+	<%= link_to 'New Bug', new_bug_path, class: "btn btn-small btn-primary"%>
+<% end %>	
+
+<%= link_to "Export to csv", request.parameters.merge({:format => :csv}), class: "btn btn-small btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= sortable "number" %></th>
+    <th><%= sortable "kb" %></th>
+    <th><%= sortable "product_family" %></th>
+    <th><%= sortable "description" %></th>
+    <th><%= sortable "details" %></th>
+    <th><%= sortable "created_at"%></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bugs.each do |bug| %>
+<% bug = bug %>
+  <tr height="40px">
+    <td id="number"><%= bug.number %></td>
+    <td id="kb"><%= bug.kb %></td>
+    <td id="prod"><%= bug.product_family %>
+    <td id="desc"><%= bug.description %></td>
+    <td id="details"><%= bug.details %></td>
+    <td id="created"><%= bug.created_at.strftime('%m-%d-%y') %></td>
+    <% if can? :update, bug %>
+    	<td><%= link_to 'Edit', edit_bug_path(bug) %></td>
+    <% end %>
+    <% if can? :destroy, bug %>
+    	<td><%= link_to 'Destroy', bug, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>

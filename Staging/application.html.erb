@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BugsIssues</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+        <header class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+                <%= form_tag find_path, :method => 'get', class: "search" do %>
+                                <%= text_field_tag :search, params[:search] %>
+                                <%= hidden_field_tag :product, @current_user.nil? ? User.find(params[:current_user]).product_selection : @current_user.product_selection %>
+                                <%= submit_tag "Search", :name => nil, class: "btn btn-primary btn-mini"  %>
+                <% end %>
+        <div class="container">
+          <%= link_to "Common Issues and KBs", root_path, id: "logo" %>
+          <div id="login">
+                        <% if current_user %>
+                          <% if current_user.admin? %>
+                              <%= link_to "Sign Out as: #{current_user.email}" , destroy_user_session_path, :method => :delete, class: "btn btn-danger btn-mini" %>
+                              <%= link_to "Change Password", edit_user_registration_path, :method => :get, class: "btn btn-success btn-mini" %>
+                          <% else %>
+                            <%= link_to "Admin Sign In", new_user_session_path(:current_user => User.find(current_user.id)), :method => :get, class: "btn btn-success btn-mini" %>
+                          <% end %>
+                       <% end %>
+          </div>
+        </div>
+        <div class="container">
+                <nav>
+                    <ul class="nav pull-left">
+                      <li><%= link_to "Critical Bugs", bugs_path %></li>
+                      <li><%= link_to "Common Issues", issues_path %></li>
+                      <li><%= link_to "FMRs", fmrs_path %></li>
+                      <li><%= link_to "Release Notes", release_notes_path %></li>
+                      <li><%= link_to "Version Info", versions_path     %></li>
+                      <li><%= link_to "Tips & Tricks", tips_path %></li>
+                    </ul>
+                  </nav>
+            </div>
+      </div>
+        <%= form_tag my_session_path, :method => :get, class: "search" do %>
+          <%= collection_select(:product, :name, Product.all, :name, :name, options = {:selected => @current_user.nil? ? User.find(params[:current_user]).product_selection : @current_user.product_selection}, :onchange => "this.form.submit()") %>
+          <%= hidden_field_tag :source, params[:controller] %>
+          <%= hidden_field_tag :search, params[:search] %>
+        <% end %>
+    </header>
+        <div id="content">
+                <%= yield %>
+        </div>
+</body>
+</html>

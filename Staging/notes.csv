@@ -1,0 +1,6 @@
+<%- headers = ["KB", "Product Family", "Description", "Details" ] -%>
+<%= CSV.generate_line(headers).html_safe %>
+<%- @release_notes.each do |n| -%>
+<%- row = [ n.kb, n.product_family, n.description, n.details ] -%>
+<%= CSV.generate_line(row).html_safe %>
+<%- end -%>

@@ -1,0 +1,36 @@
+<h1>FMRs</h1>
+<% if can? :create, Fmr %>
+	<%= link_to 'New FMR', new_fmr_path, class: "btn btn-small btn-primary"%>
+<% end %>	
+
+<%= link_to "Export to csv", request.parameters.merge({:format => :csv}), class: "btn btn-small btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= sortable "number" %></th>
+    <th><%= sortable "product_family" %></th>
+    <th><%= sortable "description" %></th>
+    <th><%= sortable "details" %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fmrs.each do |fmr| %>
+  <tr height="40px">
+    <td id="number"><%= fmr.number %></td>
+    <td id="prod"><%= fmr.product_family %></td>
+    <td id="desc"><%= fmr.description %></td>
+    <td id="details"><%= fmr.details %></td>
+    <% if can? :update, fmr %>
+    	<td><%= link_to 'Edit', edit_fmr_path(fmr) %></td>
+    <% end %>
+    <% if can? :destroy, fmr %>
+    	<td><%= link_to 'Destroy', fmr, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

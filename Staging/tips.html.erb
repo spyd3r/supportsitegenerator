@@ -1,0 +1,35 @@
+<h1>Tips and Tricks</h1>
+
+<%= link_to 'New Tip', new_tip_path, class: "btn btn-small btn-primary" %>
+
+<%= link_to "Export to csv", request.parameters.merge({:format => :csv}), class: "btn btn-small btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= sortable "name" %></th>
+    <th><%= sortable "description" %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tips.each do |tip| %>
+  <tr>
+    <% if tip.url == "" %>
+      <td id="name"><%= tip.name %></td>
+    <% else %>
+      <td id="name"><%= link_to tip.name, tip.url.html_safe, :target => "_blank" %></td>
+    <% end %>
+    <td id="desc"><%= tip.description %></td>
+    <% if can? :update, tip %>
+    	<td><%= link_to 'Edit', edit_tip_path(tip) %></td>
+    <% end %>
+    <% if can? :destroy, tip %>
+    	<td><%= link_to 'Destroy', tip, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

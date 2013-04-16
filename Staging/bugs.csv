@@ -1,0 +1,6 @@
+<%- headers = ["Number", "KB", "Product Family", "Description", "Details", "Created At" ] -%>
+<%= CSV.generate_line(headers).html_safe %>
+<%- @bugs.each do |n| -%>
+<%- row = [ n.number, n.kb, n.product_family, n.description, n.details, n.created_at ] -%>
+<%= CSV.generate_line(row).html_safe %>
+<%- end -%>

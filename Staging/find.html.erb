@@ -1,0 +1,188 @@
+<% if @bugs.nil? && @bugs.empty? && @issues.empty? && @issues.nil? && fmrs.empty? && @fmrs.nil? && @release_notes.empty? && @release_notes.nil? && @versions.empty? && @versions.nil? && @tips.nil? && @tips.nil? %>
+  <h1>No Results Found</h1>
+<% end %>
+
+<% if @bugs.nil? == false && @bugs.empty? == false %>
+<h1>Bugs:</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Product</th>
+    <th>Number</th>
+    <th>KB</th>
+    <th>Description</th>
+    <th>Details</th>
+    <th>Created At</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @bugs.each do |item| %>
+    <tr>
+      <td id="number"><%= item.product_family %></td>
+      <td id="number"><%= item.number %></td>
+      <td><%= item.kb %></td>
+      <td id="desc"><%= item.description %></td>
+      <td id="details"><%= item.details %></td>
+      <td id="created"><%= item.created_at.strftime('%m-%d-%y') %></td>
+      <% if can? :update, item %>
+    	<td><%= link_to 'Edit', edit_bug_path(item, :product => params[:product]['name'].nil? && params[:product].nil? ?  { 'name' => "All" } : params[:product]['name'].nil? ? { 'name' => params[:product] } : { 'name' => params[:product]['name'] }) %></td>
+    <% end %>
+    <% if can? :destroy, item %>
+    	<td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+
+<% if @issues.nil? == false && @issues.empty? == false %>
+<h1>Common Issues:</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Product</th>
+    <th>KB</th>
+    <th>Description</th>
+    <th>Details</th>
+    <th>Category</th>
+    <th>Created At</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @issues.each do |item| %>
+    <tr>
+      <td id="number"><%= item.product_family %></td>
+      <td><%= item.kb %></td>
+      <td id="desc"><%= item.description %></td>
+      <td id="details"><%= item.details %></td>
+      <td id="created"><%= item.created_at.strftime('%m-%d-%y') %></td>
+      <% if can? :update, item %>
+    	<td><%= link_to 'Edit', edit_issue_path(item, :product => params[:product]['name'].nil? && params[:product].nil? ?  { 'name' => "All" } : params[:product]['name'].nil? ? { 'name' => params[:product] } : { 'name' => params[:product]['name'] }) %></td>
+    <% end %>
+    <% if can? :destroy, item %>
+    	<td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+
+<% if @fmrs.nil? == false && @fmrs.empty? == false %>
+<h1>FMRs:</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Product</th>
+    <th>Number</th>
+    <th>Description</th>
+    <th>Details</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @fmrs.each do |item| %>
+    <tr>
+      <td id="number"><%= item.product_family %></td>
+      <td id="number"><%= item.number %></td>
+      <td id="desc"><%= item.description %></td>
+      <td id="details"><%= item.details %></td>
+      <% if can? :update, item %>
+    	<td><%= link_to 'Edit', edit_fmr_path(item, :product => params[:product]['name'].nil? && params[:product].nil? ?  { 'name' => "All" } : params[:product]['name'].nil? ? { 'name' => params[:product] } : { 'name' => params[:product]['name'] }) %></td>
+    <% end %>
+    <% if can? :destroy, item %>
+    	<td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+
+<% if @release_notes.nil? == false && @release_notes.empty? == false %>
+<h1>Release Notes:</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Product</th>
+    <th>KB</th>
+    <th>Description</th>
+    <th>Details</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @release_notes.each do |item| %>
+    <tr>
+      <td id="number"><%= item.product_family %></td>
+      <td><%= item.kb %></td>
+      <td id="desc"><%= item.description %></td>
+      <td id="details"><%= item.details %></td>
+      <% if can? :update, item %>
+    	<td><%= link_to 'Edit', edit_release_note_path(item, :product => params[:product]['name'].nil? && params[:product].nil? ?  { 'name' => "All" } : params[:product]['name'].nil? ? { 'name' => params[:product] } : { 'name' => params[:product]['name'] }) %></td>
+    <% end %>
+    <% if can? :destroy, item %>
+    	<td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+
+<% if @versions.nil? == false && @versions.empty? == false %>
+<h1>Version Info:</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Product</th>
+    <th>Release</th>
+    <th>Build</th>
+    <th>Details</th>
+    <th>Kernel</th>
+    <th></th>
+  </tr>
+  <% @versions.each do |item| %>
+    <tr>
+      <td id="number"><%= item.product_family %></td>
+      <td id="name"><%= item.release %></td>
+      <td id="desc"><%= item.build %></td>
+      <td id="desc"><%= item.details %></td>
+      <td id="desc"><%= item.kernel %></td>
+      <% if can? :update, item %>
+    	<td><%= link_to 'Edit', edit_tip_path(item, :product => params[:product]['name'].nil? && params[:product].nil? ?  { 'name' => "All" } : params[:product]['name'].nil? ? { 'name' => params[:product] } : { 'name' => params[:product]['name'] }) %></td>
+    <% end %>
+    <% if can? :destroy, item %>
+    	<td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+<% end %>
+
+
+<% if @tips.nil? == false && @tips.empty? == false %>
+<h1>Tip and Tricks:</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @tips.each do |item| %>
+    <tr>
+      <% if item.url == "" %>
+        <td id="name"><%= item.name %></td>
+      <% else %>
+        <td id="name"><%= link_to item.name, item.url %></td>
+      <% end %>
+      <td id="desc"><%= item.description %></td>
+      <% if can? :update, item %>
+    	<td><%= link_to 'Edit', edit_tip_path(item, :product => params[:product]['name'].nil? && params[:product].nil? ?  { 'name' => "All" } : params[:product]['name'].nil? ? { 'name' => params[:product] } : { 'name' => params[:product]['name'] }) %></td>
+    <% end %>
+    <% if can? :destroy, item %>
+    	<td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+

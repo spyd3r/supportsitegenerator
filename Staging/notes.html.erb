@@ -1,0 +1,37 @@
+<h1>Release Notes</h1>
+<% if can? :create, ReleaseNote %>
+	<%= link_to 'New Release Note', new_release_note_path, class: "btn btn-small btn-primary"%>
+<% end %>	
+
+<%= link_to "Export to csv", request.parameters.merge({:format => :csv}), class: "btn btn-small btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= sortable "kb" %></th>
+    <th><%= sortable "product_family" %></th>
+    <th><%= sortable "description" %></th>
+    <th><%= sortable "details" %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @release_notes.each do |release_note| %>
+  <tr height="40px">
+    <td id="number"><%= release_note.kb %></td>
+    <td id="prod"><%= release_note.product_family %></td>
+    <td id="desc"><%= release_note.description %></td>
+    <td id="details"><%= release_note.details %></td>
+	<% if can? :update, release_note 	 %>
+    	<td><%= link_to 'Edit', edit_release_note_path(release_note) %></td>
+    <% end %>
+    <% if can? :destroy, release_note %>
+    	<td><%= link_to 'Destroy', release_note, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

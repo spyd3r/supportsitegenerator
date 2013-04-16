@@ -1,0 +1,6 @@
+<%- headers = ["Number", "KB", "Product Family", "Description", "Details" ] -%>
+<%= CSV.generate_line(headers).html_safe %>
+<%- @fmrs.each do |n| -%>
+<%- row = [ n.number, n.kb, n.product_family, n.description, n.details ] -%>
+<%= CSV.generate_line(row).html_safe %>
+<%- end -%>

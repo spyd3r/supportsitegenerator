@@ -1,0 +1,33 @@
+<h1>Version Info</h1>
+
+<% if can? :create, Version %>
+	<%= link_to 'New Version', new_version_path, class: "btn btn-small btn-primary" %>
+<% end %>
+
+<%= link_to "Export to csv", request.parameters.merge({:format => :csv}), class: "btn btn-small btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= sortable "product_family" %></th>
+    <th><%= sortable "release" %></th>
+    <th><%= sortable "build" %></th>
+    <th><%= sortable "details" %></th>
+    <th><%= sortable "kernel" %></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @versions.each do |version| %>
+  <tr>
+    <td id="prod"><%= version.product_family %></td>
+    <td id="name"><%= version.release %></td>
+    <td id="kb"><%= version.build %></td>
+    <td id="desc"><%= version.details %></td>
+    <td id="category"><%= version.kernel %></td>
+    <td><%= link_to 'Edit', edit_version_path(version) %></td>
+    <td><%= link_to 'Destroy', version, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+STRING
+print "Create admin user email address: "
+email = gets.chomp
+print "Create admin password: "
+password = gets.chomp
+@user = User.new(:email => "#{email}", :password => "#{password}")
+@user.admin = 't'
+@user.save!
+

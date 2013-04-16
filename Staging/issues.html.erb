@@ -1,0 +1,37 @@
+<h1>Common Issues</h1>
+<% if can? :create, Issue %>
+	<%= link_to 'New Issue', new_issue_path, class: "btn btn-small btn-primary"%>
+<% end %>	
+
+<%= link_to "Export to csv", request.parameters.merge({:format => :csv}), class: "btn btn-small btn-primary" %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= sortable "kb" %></th>
+    <th><%= sortable "product_family" %></th>
+    <th><%= sortable "description" %></th>
+    <th><%= sortable "details" %></th>
+    <th><%= sortable "created_at"%></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @issues.each do |issue| %>
+  <tr height="40px">
+    <td id="number"><%= issue.kb %></td>
+    <td id="prod"><%= issue.product_family %>
+    <td id="desc"><%= issue.description %></td>
+    <td id="details"><%= issue.details %></td>
+    <td id="created"><%= issue.created_at.strftime('%m-%d-%y') %></td>
+    <% if can? :update, issue %>
+    	<td><%= link_to 'Edit', edit_issue_path(issue) %></td>
+    <% end %>
+    <% if can? :destroy, issue %>
+    	<td><%= link_to 'Destroy', issue, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />

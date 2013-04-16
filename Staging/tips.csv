@@ -1,0 +1,6 @@
+<%- headers = ["Name", "Description", "URL" ] -%>
+<%= CSV.generate_line(headers).html_safe %>
+<%- @tips.each do |n| -%>
+<%- row = [ n.name, n.description, n.url ] -%>
+<%= CSV.generate_line(row).html_safe %>
+<%- end -%>
