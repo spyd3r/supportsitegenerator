@@ -4,6 +4,15 @@ print "Create admin user email address: "
 email = gets.chomp
 print "Create admin password: "
 password = gets.chomp
+print "Confirm admin password: "
+pwd_conf = gets.chomp
+until password == pwd_conf
+  print "Password don't match"
+  print "Create admin password: "
+  password = gets.chomp
+  print "Confirm admin password: "
+  pwd_conf = gets.chomp
+end
 @user = User.new(:email => "#{email}", :password => "#{password}")
 @user.admin = 't'
 @user.save!
